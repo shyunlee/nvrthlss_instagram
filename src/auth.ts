@@ -31,6 +31,18 @@ export const providerMap = providers
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers,
+  callbacks: {
+    async session({session}) {
+      const user = session?.user;
+      if (user) {
+        session.user={
+          ...user,
+          username: user.email?.split('@')[0] || '',
+        }
+      }
+      return session;
+    }
+  },
   pages: {
     signIn: '/auth/signin'
   }

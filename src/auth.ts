@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import Credentials from 'next-auth/providers/credentials'
 import type { Provider } from 'next-auth/providers'
 import Google from "next-auth/providers/google"
+import { addNewUser } from "./service/sanity/user"
 
 const providers: Provider[] = [
   Credentials({
@@ -32,6 +33,19 @@ export const providerMap = providers
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers,
   callbacks: {
+    async signIn({user, profile}) {
+      if (!user.email || !profile?.sub) {
+        return false;
+      }
+      addNewUser({
+        id: profile.sub,
+        email: user.email,
+        name: user.name || '',
+        username: user.email.split('@')[0],
+        image: user.image || ''
+      })
+      return true;
+    },
     async session({session}) {
       const user = session?.user;
       if (user) {

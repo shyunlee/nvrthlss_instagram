@@ -15,7 +15,7 @@ export default function Avatar({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className={`rounded-full bg-white ${getImageSizeStyle(size)}`}
+        className={`rounded-full object-cover bg-white ${getImageSizeStyle(size)}`}
         alt={'profile image'}
         src={image ?? undefined}
         referrerPolicy='no-referrer'
@@ -29,7 +29,7 @@ function getContainerStyle(size: string, highlight: boolean): string {
   const highlightStyle = highlight
     ? 'bg-gradient-to-bl from-fuchsia-600 via-rose-500 to-amber-300'
     : '';
-  const sizeStyle = size === 'small' ? 'w-9 h-9' : 'w-[65px] h-[65px]';
+  const sizeStyle = size === 'small' ? 'w-9 h-9' : 'w-[68px] h-[68px]';
   return `${baseStyle} ${highlightStyle} ${sizeStyle}`;
 }
 

@@ -9,12 +9,8 @@ import ScrollableBar from './ui/ScrollableBar';
 
 export default function FollowingBar() {
   const { data, error, isLoading } = useSWR<DetailUser>('/api/me');
-  // const followingUsers = data?.following;
-  const followingUsers = data?.following && [
-    ...data.following,
-    ...data.following,
-    ...data.following,
-  ];
+  const followingUsers = data?.following;
+
   return (
     <section className='w-full flex justify-center items-center p-4 shadow-sm shadow-neutral-300 mb-4 rounded-lg min-h-[90px] overflow-x-auto'>
       {isLoading ? (

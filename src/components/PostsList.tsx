@@ -3,8 +3,7 @@ import { SimplePost } from '@/model/post';
 import useSWR from 'swr';
 
 export default function PostList() {
-  const { data: posts, isLoading: loading } =
-    useSWR<SimplePost[]>('/api/posts');
+  const { data: posts, isLoading } = useSWR<SimplePost[]>('/api/posts');
   console.log(posts);
 
   return (

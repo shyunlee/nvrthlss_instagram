@@ -1,5 +1,5 @@
 import { SimplePost } from '../../model/post';
-import { client } from './sanity';
+import { client, urlFor } from './sanity';
 
 const simplePostProjection = `
     ...,
@@ -23,6 +23,6 @@ export async function getFollowingPostsOf(username: string) {
         }`
     )
     .then((posts) =>
-      posts.map((post: SimplePost) => ({ ...post, image: post.image }))
+      posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
     );
 }

@@ -11,14 +11,14 @@ export default function PostList() {
   return (
     <section>
       {isLoading && (
-        <div>
+        <div className='flex justify-center mt-32'>
           <HashLoader color='red' />
         </div>
       )}
       {posts && (
         <ul>
           {posts.map((post) => (
-            <li key={post.id}><PostListCard post={post}/></li>
+            <li key={post.id} className='mb-4'><PostListCard post={post}/></li>
           ))}
         </ul>
       )}

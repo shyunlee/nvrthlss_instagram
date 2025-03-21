@@ -10,8 +10,6 @@ export default function PostDetail({post}: PostDetailProps) {
   const {data, isLoading} = useSWR<FullPost>(`api/posts/${post.id}`)
   const comments = data ? data.comments : []
 
-  console.log(comments)
-
   return (
     <>
     

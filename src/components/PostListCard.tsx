@@ -8,6 +8,7 @@ import ActionBar from './ActionBar';
 import { useState } from 'react';
 import ModalPortal from './ui/ModalPortal';
 import PostModal from './PostModal';
+import PostDetail from './PostDetail';
 
 type PostListCardProps = {
   post: SimplePost;
@@ -35,9 +36,7 @@ export default function PostListCard({ post, priority=false }: PostListCardProps
       <CommentBar />
       {openModal && <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>
-            <div>
-              Post Detail Modal
-            </div>
+            <PostDetail post={post}/>
           </PostModal>
         </ModalPortal>}
     </article>

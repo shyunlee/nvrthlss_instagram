@@ -1,7 +1,6 @@
 'use client';
 
 import { SimplePost } from '@/model/post';
-import Avatar from './Avatar';
 import Image from 'next/image';
 import CommentBar from './CommentBar';
 import ActionBar from './ActionBar';
@@ -9,6 +8,7 @@ import { useState } from 'react';
 import ModalPortal from './ui/ModalPortal';
 import PostModal from './PostModal';
 import PostDetail from './PostDetail';
+import PostUserAvatar from './PostUserAvatar';
 
 type PostListCardProps = {
   post: SimplePost;
@@ -19,10 +19,7 @@ export default function PostListCard({ post, priority=false }: PostListCardProps
   const [openModal, setOpenModal] = useState(false)
   return (
     <article className='rounded-lg shadow-md border border-gray-200'>
-      <div className='flex items-center p-2'>
-        <Avatar image={userImage} highlight size='medium' />
-        <span className='text-gray-900 font-bold ml-2'>{username}</span>
-      </div>
+      <PostUserAvatar username={username} userImage={userImage} />
       <Image
         className='w-full object-cover aspect-square'
         src={image}

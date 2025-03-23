@@ -24,7 +24,7 @@ export default function Navbar() {
   const user = session?.user;
 
   return (
-    <div className='flex justify-between px-6 py-4 items-center border-b'>
+    <div className='flex justify-between px-6 py-4 items-center'>
       <Link href='/'>
         <h1 className='text-2xl font-bold'>Seanstagram</h1>
       </Link>

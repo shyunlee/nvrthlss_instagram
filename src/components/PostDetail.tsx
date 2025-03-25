@@ -12,7 +12,7 @@ type PostDetailProps = {
 
 export default function PostDetail({ post }: PostDetailProps) {
   const { id, username, userImage, image, likes, createdAt } = post;
-  const { data, isLoading } = useSWR<FullPost>(`api/posts/${id}`);
+  const { data, isLoading } = useSWR<FullPost>(`/api/posts/${id}`);
   const comments = data ? data.comments : [];
   console.log(comments)
 

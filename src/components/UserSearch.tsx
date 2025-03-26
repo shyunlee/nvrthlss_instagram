@@ -4,6 +4,7 @@ import { SearchResultUser } from "@/model/user";
 import { FormEvent, useState } from "react";
 import useSWR from "swr";
 import GridSpinner from "./ui/GridSpinner";
+import UserCard from "./UserCard";
 
 export default function UserSearch() {
   const [keyword, setKeyword] = useState('')
@@ -21,7 +22,7 @@ export default function UserSearch() {
       {!isLoading && !error && users?.length === 0 && <p>No users found</p> }
       {<ul>{
         users?.map((user) => <li key={user.username}>
-        {user.username}
+        <UserCard user={user} />
       </li>)
         }</ul>}
     </>

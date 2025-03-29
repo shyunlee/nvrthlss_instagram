@@ -1,3 +1,4 @@
+import UserPosts from "@/components/UserPosts";
 import UserProfile from "@/components/UserProfile";
 import { getUserProfile } from "@/service/sanity/user";
 import { notFound } from "next/navigation";
@@ -14,5 +15,10 @@ export default async function UserPage({ params }: UserPageProps) {
   if (!profileUser) {
     notFound();
   }
-  return <UserProfile user={profileUser} />;
+  return (
+    <>
+      <UserProfile user={profileUser} />
+      <UserPosts user={profileUser} />
+    </>
+  );
 }

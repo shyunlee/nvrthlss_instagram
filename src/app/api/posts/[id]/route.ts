@@ -5,6 +5,7 @@ type Context = {
   params: { id: string };
 };
 export async function GET(req: NextRequest, context: Context) {
+  const { id } = await context.params;
   const session = await auth();
   const user = session?.user;
 
@@ -12,6 +13,6 @@ export async function GET(req: NextRequest, context: Context) {
     return new Response('Authentication Error', { status: 401 });
   }
 
-  return getPostDetail(context.params.id) //
+  return getPostDetail(id) //
     .then((res) => NextResponse.json(res));
 }

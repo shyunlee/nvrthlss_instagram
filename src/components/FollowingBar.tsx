@@ -8,7 +8,7 @@ import Avatar from './Avatar';
 import ScrollableBar from './ui/ScrollableBar';
 
 export default function FollowingBar() {
-  const { data, error, isLoading } = useSWR<DetailUser>('/api/me');
+  const { data, isLoading } = useSWR<DetailUser>('/api/me');
   const followingUsers = data?.following;
 
   return (
@@ -21,7 +21,6 @@ export default function FollowingBar() {
         )
       )}
       {followingUsers && followingUsers.length > 0 && (
-        // <div>
         <ScrollableBar>
           {followingUsers.map(({ username, image }) => (
             <Link
@@ -36,7 +35,6 @@ export default function FollowingBar() {
             </Link>
           ))}
         </ScrollableBar>
-        // </div>
       )}
     </section>
   );

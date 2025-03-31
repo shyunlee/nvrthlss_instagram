@@ -1,15 +1,11 @@
 import { getLikedPostsOf, getPostsOf, getSavedPostsOf } from "@/service/sanity/post";
 import { NextRequest, NextResponse } from "next/server";
 
-// type ContextProps = {
-//   params: Promise<{slug: string[]}>
-// }
-
-type ContextProps = {
-  params: {slug: string[]}
+type Context = {
+  params: Promise<{slug: string[]}>
 }
 
-export async function GET(_:NextRequest, context: ContextProps) {
+export async function GET(_:NextRequest, context: Context) {
  const [username, query] = (await context.params).slug;
 
  if (!username || !query) {

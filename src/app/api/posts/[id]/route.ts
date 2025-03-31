@@ -2,9 +2,10 @@ import { auth } from '@/auth';
 import {  getPostDetail } from '@/service/sanity/post';
 import { NextRequest, NextResponse } from 'next/server';
 type Context = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
-export async function GET(req: NextRequest, context: Context) {
+
+export async function GET(_: NextRequest, context: Context) {
   const { id } = await context.params;
   const session = await auth();
   const user = session?.user;

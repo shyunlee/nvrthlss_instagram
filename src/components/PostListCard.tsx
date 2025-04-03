@@ -29,7 +29,7 @@ export default function PostListCard({ post, priority=false }: PostListCardProps
         priority={priority}
         onClick={() => setOpenModal(true)}
       />
-      <ActionBar likes={likes} username={username} text={text} createdAt={createdAt} />
+      <ActionBar post={post} />
       <CommentBar />
       {openModal && <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>

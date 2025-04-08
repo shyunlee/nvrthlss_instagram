@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { SimplePost } from '@/model/post';
 import { useSession } from 'next-auth/react';
 import { useSWRConfig } from 'swr';
+import usePosts from '@/hooks/post';
 
 type ActionBarProps = {
   post: SimplePost;
@@ -18,15 +19,13 @@ export default function ActionBar({ post }: ActionBarProps) {
   const { id, likes, username, text, createdAt } = post
   const {data: session} = useSession();
   const user = session?.user
-  // const [liked, setLiked] = useState(user ? likes.includes(user.username) : false);
-  const liked = user ? likes.includes(user.username) : false
+   const liked = user ? likes.includes(user.username) : false
   const [bookmarked, setBookmarked] = useState(false);
-  const { mutate } = useSWRConfig();
+  const {setLike} = usePosts();
   const toggleLike = (like: boolean) => {
-    fetch('/api/likes', {
-      method: 'PUT',
-      body: JSON.stringify({id, like})
-    }).then(() => mutate('/api/posts'))
+    if (user) {
+      setLike(post, user.username, like)
+    }
   }
 
   return (

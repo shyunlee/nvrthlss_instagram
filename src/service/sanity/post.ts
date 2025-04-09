@@ -65,7 +65,11 @@ export async function getSavedPostsOf(username: string) {
     .fetch(
       `
     *[_type == "post" && _id in *[_type == "user" && username == "${username}"].bookmakrs[]._ref] | order(_createdAt desc) {${simplePostProjection}}
-    `
+    `,
+      {},
+      {
+        cache: 'no-cache',
+      }
     )
     .then(mapPosts);
 }

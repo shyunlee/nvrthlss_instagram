@@ -84,7 +84,7 @@ export async function addBookmark(userId: string, postId: string) {
   return client
     .patch(userId)
     .setIfMissing({ bookmarks: [] })
-    .append('bookmakrs', [{ _ref: postId, _type: 'reference' }])
+    .append('bookmarks', [{ _ref: postId, _type: 'reference' }])
     .commit({ autoGenerateArrayKeys: true });
 }
 

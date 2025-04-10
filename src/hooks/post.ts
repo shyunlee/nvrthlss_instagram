@@ -8,6 +8,13 @@ async function updateLike(id: string, like: boolean) {
   }).then((res) => res.json());
 }
 
+async function addComment(id: string, comment: string) {
+  return fetch('/api/comments', {
+    method: 'POST',
+    body: JSON.stringify({id, comment})
+  }).then((res) => res.json());
+}
+
 export default function usePosts() {
   const {data: posts, isLoading, error, mutate} = useSWR<SimplePost[]>('/api/posts');
   
@@ -23,5 +30,17 @@ export default function usePosts() {
     })
   }
 
-  return {data: posts, isLoading, error, setLike}
+  const postComment = (post: SimplePost, comment: string) => {
+    const newPost = {...post, comments: post.comments + 1}
+    const updatedPostList = posts?.map(p => p.id === post.id ? newPost : p)
+
+    return mutate(addComment(post.id, comment), {
+      optimisticData: updatedPostList,
+      populateCache: false,
+      revalidate: false,
+      rollbackOnError: true
+    })
+  }
+
+  return {data: posts, isLoading, error, setLike, postComment}
 }

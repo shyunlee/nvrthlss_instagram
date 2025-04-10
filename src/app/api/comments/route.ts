@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { addComment, dislikePost, likePost } from "@/service/sanity/post";
+import { addComment } from "@/service/sanity/post";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
   if (!id || comment === undefined) {
     return new Response('Bad Request', {status: 400})
   }
-
 
   return addComment(id, user.id, comment) //
   .then(res => NextResponse.json(res))

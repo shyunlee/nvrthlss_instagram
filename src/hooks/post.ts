@@ -1,12 +1,5 @@
-import { SimplePost } from "@/model/post";
+import { Comment, FullPost } from "@/model/post";
 import useSWR from "swr"
-
-async function updateLike(id: string, like: boolean) {
-  return fetch('/api/likes', {
-    method: 'PUT',
-    body: JSON.stringify({id, like})
-  }).then((res) => res.json());
-}
 
 async function addComment(id: string, comment: string) {
   return fetch('/api/comments', {
@@ -15,32 +8,21 @@ async function addComment(id: string, comment: string) {
   }).then((res) => res.json());
 }
 
-export default function usePosts() {
-  const {data: posts, isLoading, error, mutate} = useSWR<SimplePost[]>('/api/posts');
-  
-  const setLike = (post: SimplePost, username: string, like: boolean) => {
-    const newPost = {...post, likes: like ? [...post.likes, username] : post.likes.filter(user => user !== username)}
-    const updatedPostList = posts?.map(p => p.id === post.id ? newPost : p)
+export default function useFullPost(postId: string) {
+  const {data: post, isLoading, error, mutate} = useSWR<FullPost>(`/api/posts/${postId}`);
 
-    return mutate(updateLike(post.id, like), {
-      optimisticData: updatedPostList,
+  const postComment = (comment: Comment) => {
+    if (!post) return;
+
+    const newPost = {...post, comments: [...post.comments, comment]}
+
+    return mutate(addComment(post.id, comment.comment), {
+      optimisticData: newPost,
       populateCache: false,
       revalidate: false,
       rollbackOnError: true
     })
   }
 
-  const postComment = (post: SimplePost, comment: string) => {
-    const newPost = {...post, comments: post.comments + 1}
-    const updatedPostList = posts?.map(p => p.id === post.id ? newPost : p)
-
-    return mutate(addComment(post.id, comment), {
-      optimisticData: updatedPostList,
-      populateCache: false,
-      revalidate: false,
-      rollbackOnError: true
-    })
-  }
-
-  return {data: posts, isLoading, error, setLike, postComment}
+  return {data: post, isLoading, error, postComment}
 }

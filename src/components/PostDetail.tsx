@@ -5,6 +5,8 @@ import PostUserAvatar from './PostUserAvatar';
 import Avatar from './Avatar';
 import CommentBar from './CommentBar';
 import ActionBar from './ActionBar';
+import useFullPost from '@/hooks/post';
+import useMe from '@/hooks/me';
 
 type PostDetailProps = {
   post: SimplePost;
@@ -12,8 +14,12 @@ type PostDetailProps = {
 
 export default function PostDetail({ post }: PostDetailProps) {
   const { id, username, userImage, image, likes, createdAt } = post;
-  const { data } = useSWR<FullPost>(`/api/posts/${id}`);
+  const { data, postComment } = useFullPost(id);
+  const { data: user } = useMe();
   const comments = data ? data.comments : [];
+  const handlePostComment = (comment: string) => {
+    user && postComment({comment, username: user.username, userImage: user.image})
+  }
 
   return (
     <section className='flex w-full h-full'>
@@ -48,7 +54,7 @@ export default function PostDetail({ post }: PostDetailProps) {
             )}
         </ul>
         <ActionBar post={post} />
-        <CommentBar />
+        <CommentBar onPostComment={handlePostComment}/>
       </div>
     </section>
   );

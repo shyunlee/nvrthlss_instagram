@@ -7,7 +7,7 @@ import {
 } from './ui/icons';
 import ToggleButton from './ui/ToggleButton';
 import { SimplePost } from '@/model/post';
-import usePosts from '@/hooks/post';
+import usePosts from '@/hooks/posts';
 import useMe from '@/hooks/me';
 
 type ActionBarProps = {

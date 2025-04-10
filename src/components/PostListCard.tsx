@@ -14,9 +14,13 @@ type PostListCardProps = {
   post: SimplePost;
   priority?: boolean;
 };
-export default function PostListCard({ post, priority=false }: PostListCardProps) {
-  const { username, userImage, image, text, likes, comments, createdAt } = post;
-  const [openModal, setOpenModal] = useState(false)
+export default function PostListCard({
+  post,
+  priority = false,
+}: PostListCardProps) {
+  const { username, userImage, image, text, comments } = post;
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <article className='rounded-lg shadow-md border border-gray-200'>
       <PostUserAvatar username={username} userImage={userImage} />
@@ -29,13 +33,28 @@ export default function PostListCard({ post, priority=false }: PostListCardProps
         priority={priority}
         onClick={() => setOpenModal(true)}
       />
-      <ActionBar post={post} />
+      <ActionBar post={post}>
+        <p>
+          <span className='font-bold mr-1'>{username}</span>
+          {text}
+        </p>
+        {comments === 1 && (
+          <button
+            className='font-bold text-sm my-1 text-sky-500'
+            onClick={() => setOpenModal(true)}
+          >
+            {`View all ${comments} comments`}
+          </button>
+        )}
+      </ActionBar>
       <CommentBar />
-      {openModal && <ModalPortal>
+      {openModal && (
+        <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>
-            <PostDetail post={post}/>
+            <PostDetail post={post} />
           </PostModal>
-        </ModalPortal>}
+        </ModalPortal>
+      )}
     </article>
   );
 }

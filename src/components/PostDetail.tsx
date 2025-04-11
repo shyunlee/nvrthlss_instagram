@@ -16,7 +16,7 @@ export default function PostDetail({ post }: PostDetailProps) {
 
   return (
     <section className='flex w-full h-full'>
-      <div className='relative basis-3/5'>
+      <div className='relative basis-3/5 flex-shrink-0'>
         <Image
           className='object-cover'
           src={image}
@@ -26,27 +26,29 @@ export default function PostDetail({ post }: PostDetailProps) {
           sizes='650px'
         />
       </div>
-      <div className='flex flex-col basis-2/5 w-full'>
+      <div className='flex flex-col basis-2/5 w-full overflow-hidden pr-4'>
         <PostUserAvatar username={username} userImage={userImage} />
         <ul className='border-t border-gray-200 h-full overflow-y-auto p-4 mb-1'>
           {comments &&
             comments.map(
               ({ comment, userImage, username: commentUsername }, index) => (
-                <li className='flex items-center mb-1' key={index}>
-                  <Avatar
-                    image={userImage}
-                    size='small'
-                    highlight={commentUsername === username}
-                  />
-                  <div className='ml-2'>
+                <li className='flex mb-1' key={index}>
+                  <div>
+                    <Avatar
+                      image={userImage}
+                      size='small'
+                      highlight={commentUsername === username}
+                    />
+                  </div>
+                  <div className='ml-2 mt-1 w-full overflow-hidden'>
                     <span className='font-bold mr-1'>{commentUsername}</span>
-                    <span>{comment}</span>
+                    <span className='break-words'>{comment}</span>
                   </div>
                 </li>
               )
             )}
         </ul>
-        <ActionBar post={post} onPostComment={postComment}/>
+        <ActionBar post={post} onPostComment={postComment} />
       </div>
     </section>
   );

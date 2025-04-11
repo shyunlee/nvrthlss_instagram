@@ -40,7 +40,7 @@ export default function ActionBar({ post, children, onPostComment }: ActionBarPr
   }
 
   return (
-    <>
+    <div className='w-full'>
       <div className='flex justify-between py-2 px-4'>
         <ToggleButton
           toggled={liked}
@@ -63,6 +63,6 @@ export default function ActionBar({ post, children, onPostComment }: ActionBarPr
         </p>
       </div>
       <CommentBar onPostComment={handlePostComment}/>
-    </>
+    </div>
   );
 }

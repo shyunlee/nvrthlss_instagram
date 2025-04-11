@@ -41,7 +41,7 @@ type ImageSizeStyle = {
 function getImageSizeStyle(size: AvatarSize): ImageSizeStyle {
   switch (size) {
     case 'small':
-      return {container: 'w-9 h-9', image: 'w-[34px] h-[34px] p-[0.1rem]'}
+      return {container: 'w-9 h-9', image: 'w-[34px] h-[34px] p-[2px]'}
     case 'medium':
       return {container: 'w-11 h-11', image: 'w-[41px] h-[41px] p-[0.1rem]'}
     case 'large':

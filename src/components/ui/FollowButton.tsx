@@ -8,16 +8,20 @@ type FollowButtonProps = {
   user: ProfileUser
 }
 
-export default function FollowButton({user}: FollowButtonProps) {
-  const { username } = user;
-  const {data: loggedInUser} = useMe();
+export default function FollowButton({user: userToFollow}: FollowButtonProps) {
+  const { username } = userToFollow;
+  const {data: loggedInUser, toggleFollow } = useMe();
   const showButton = loggedInUser && loggedInUser.username !== username;
   const isFollowing = loggedInUser && !!loggedInUser.following.find((item) => item.username === username);
   const buttonText = isFollowing ? 'Unfollow' : 'Follow'
 
+  const handleClickFollow = () => {
+    toggleFollow(userToFollow.id, !isFollowing)
+  }
+
   return (
     <>
-      {showButton && <Button text={buttonText} onClick={() => {}} red={isFollowing}/>}
+      {showButton && <Button text={buttonText} onClick={handleClickFollow} red={isFollowing}/>}
     </>
   )
 };

@@ -36,7 +36,7 @@ export default function useMe() {
     return mutate(updateFollow(targetId, follow), {
       populateCache: false,
     })
-  }, [])
+  }, [mutate])
 
   return {data: user, isLoading, error, setBookmark, toggleFollow}
 }

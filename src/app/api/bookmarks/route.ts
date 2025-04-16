@@ -21,5 +21,4 @@ export async function PUT(req: NextRequest) {
   return request(user.id, id) //
   .then(res => NextResponse.json(res))
   .catch(error => new Response(JSON.stringify(error), {status: 500}))
-  
 } 

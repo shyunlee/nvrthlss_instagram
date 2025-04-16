@@ -17,7 +17,7 @@ type ActionBarProps = {
   onPostComment: (comment: Comment) => void;
 };
 export default function ActionBar({ post, children, onPostComment }: ActionBarProps) {
-  const { id, likes, username, text, createdAt } = post;
+  const { id, likes, createdAt } = post;
   const { data: user, setBookmark } = useMe();
   const liked = user ? likes.includes(user.username) : false;
   const bookmarked = user ? user.bookmarks.includes(id) : false;

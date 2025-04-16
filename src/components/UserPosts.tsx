@@ -17,7 +17,7 @@ const tabs = [
 ]
 export default function UserPosts({user: {username}}: UserProfileProps) {
   const [tab, setTab] = useState(tabs[0].type)
-
+  console.log('111')
   return (
     <section>
       <ul className='flex justify-center uppercase'>

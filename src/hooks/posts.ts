@@ -28,7 +28,7 @@ export default function usePosts() {
     return mutate(updateLike(post.id, like), {
       optimisticData: updatedPostList,
       populateCache: false,
-      revalidate: false,
+      revalidate: true,
       rollbackOnError: true
     })
   }, [mutate])

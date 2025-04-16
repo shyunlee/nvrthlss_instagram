@@ -10,7 +10,7 @@ type PostDetailProps = {
 };
 
 export default function PostDetail({ post }: PostDetailProps) {
-  const { id, username, userImage, image, likes, createdAt } = post;
+  const { id, username, userImage, image } = post;
   const { data, postComment } = useFullPost(id);
   const comments = data ? data.comments : [];
 

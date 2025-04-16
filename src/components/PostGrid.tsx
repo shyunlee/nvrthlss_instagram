@@ -4,7 +4,7 @@ import usePosts from '@/hooks/posts';
 
 export default function PostGrid() {
   const {data: posts, isLoading} = usePosts();
- 
+
   return (
     <div className='w-full text-center'>
       {isLoading && <div className='mt-4'><GridSpinner /></div>}

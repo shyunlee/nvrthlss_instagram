@@ -1,6 +1,6 @@
 import { DetailUser } from "@/model/user";
 import { useCallback } from "react";
-import useSWR from "swr"
+import useSWR, { useSWRConfig } from "swr"
 
 async function updateBookmark(postId: string, bookmark: boolean) {
   return fetch('/api/bookmarks', {
@@ -18,7 +18,8 @@ async function updateFollow(targetId: string, follow: boolean) {
 
 export default function useMe() {
   const {data: user, isLoading, error, mutate} = useSWR<DetailUser>('/api/me');
-  
+
+  const { mutate: globalMutate } = useSWRConfig();
   const setBookmark = useCallback((postId: string, bookmark: boolean) => {
     if (!user) return;
     const bookmarks = user.bookmarks;
@@ -29,7 +30,7 @@ export default function useMe() {
       populateCache: false,
       revalidate: false,
       rollbackOnError: true
-    })
+    }).then(() => globalMutate(`/api/user/${user.username}/saved`))
   }, [user, mutate])
 
   const toggleFollow = useCallback((targetId: string, follow: boolean) => {

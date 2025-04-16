@@ -1,20 +1,10 @@
-import useSWR from 'swr';
 import GridSpinner from './ui/GridSpinner';
-import { SimplePost } from '@/model/post';
 import PostGridCard from './PostGridCard';
+import usePosts from '@/hooks/posts';
 
-type PostGridProps = {
-  username: string;
-  query: string;
-};
-
-export default function PostGrid({ username, query }: PostGridProps) {
-  const {
-    data: posts,
-    isLoading,
-    error,
-  } = useSWR<SimplePost[]>(`/api/user/${username}/${query}`);
-
+export default function PostGrid() {
+  const {data: posts, isLoading} = usePosts();
+ 
   return (
     <div className='w-full text-center'>
       {isLoading && <div className='mt-4'><GridSpinner /></div>}

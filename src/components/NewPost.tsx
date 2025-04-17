@@ -5,6 +5,7 @@ import PostUserAvatar from './PostUserAvatar';
 import FilesIcon from './ui/icons/FilesIcon';
 import Button from './ui/Button';
 import { ChangeEvent, useState } from 'react';
+import Image from 'next/image';
 
 type NewPostProps = {
   user: AuthUser;
@@ -12,7 +13,6 @@ type NewPostProps = {
 
 export default function NewPost({ user: { username, image } }: NewPostProps) {
   const [isDragging, setIsDragging] = useState(false);
-  const [dragCounter, setDragCounter] = useState(0);
   const [file, setFile] = useState<File>();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,16 +25,9 @@ export default function NewPost({ user: { username, image } }: NewPostProps) {
 
   const handleDrag = (e: React.DragEvent) => {
     if (e.type === 'dragenter') {
-      setDragCounter(dragCounter + 1)
       setIsDragging(true);
     } else if (e.type === 'dragleave') {
-      setDragCounter((prev) => {
-        const newCounter = prev - 1
-        if (newCounter === 0) {
-          setIsDragging(false);
-        }
-        return newCounter
-      })
+      setIsDragging(false);
     }
   };
 
@@ -51,7 +44,7 @@ export default function NewPost({ user: { username, image } }: NewPostProps) {
     }
   };
   return (
-    <section className='w-full flex flex-col items-center mt-6 mx-6'>
+    <section className='w-full max-w-xl flex flex-col items-center m-6'>
       <PostUserAvatar username={username} userImage={image ?? ''} />
       <form className='w-full flex flex-col mt-2'>
         <input
@@ -64,7 +57,7 @@ export default function NewPost({ user: { username, image } }: NewPostProps) {
         />
         <label
           htmlFor='input-upload'
-          className={`relative w-full flex flex-col items-center justify-center h-60 ${!file && 'border-2 border-sky-500 border-dashed'}`}
+          className={`relative w-full flex flex-col items-center justify-center h-72 ${!file && 'border-2 border-sky-500 border-dashed'}`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDragOver}
@@ -73,11 +66,24 @@ export default function NewPost({ user: { username, image } }: NewPostProps) {
           {isDragging && (
             <div className='absolute inset-0 z-10 bg-sky-500/20 pointer-events-none' />
           )}
-          <FilesIcon />
-          <p>Drag and Drop your image here or click</p>
+          {!file && (
+            <div className='flex flex-col items-center pointer-events-none'>
+              <FilesIcon />
+              <p>Drag and Drop your image here or click</p>
+            </div>
+          )}
+          {file && (
+              <Image
+                className='object-cover'
+                src={URL.createObjectURL(file)}
+                alt='local file'
+                fill
+                sizes='650px'
+              />
+          )}
         </label>
         <textarea
-          className='outline-none'
+          className='outline-none p-2'
           name='text'
           id='input-text'
           required

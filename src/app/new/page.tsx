@@ -17,8 +17,6 @@ export default async function AddNewPage() {
   }
 
   return (
-    <div className='md:w-[50%]'>
       <NewPost user={user} />
-    </div>
   );
 }

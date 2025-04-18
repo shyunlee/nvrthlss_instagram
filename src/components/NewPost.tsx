@@ -53,7 +53,9 @@ export default function NewPost({ user: { username, image } }: NewPostProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!file) return;
+    
     setIsLoading(true);
+
     const formData = new FormData();
     formData.append('file', file)
     formData.append('text', textRef.current?.value ?? '')
@@ -66,7 +68,7 @@ export default function NewPost({ user: { username, image } }: NewPostProps) {
         setError(`${res.status} ${res.statusText}`)
         return;
       }
-      router.push(`/user/${username}`)
+      router.push(`/`)
     })
     .catch((err) => setError(err.toString()))
     .finally(() => setIsLoading(false));
